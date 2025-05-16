@@ -22,6 +22,16 @@ class HomeController extends Controller
 
         $author = Author::firstOrCreate(['name' => $request->author]);
 
+        $duplicate = Book::where('title', $request->title)
+            ->where('author_id', $author->id)
+            ->exists();
+
+        if ($duplicate) {
+            return redirect('/')
+                ->withErrors(['title' => 'This book is already stored in your library.'])
+                ->withInput();
+        }
+
         Book::create([
             'title' => $request->title,
             'author_id' => $author->id,
