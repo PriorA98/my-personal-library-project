@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire;
 
-use App\Author;
 use Livewire\Component;
-use App\Book;
+use App\Services\BookService;
+use App\Services\AuthorService;
 
 class BooksTable extends Component
 {
@@ -26,12 +26,12 @@ class BooksTable extends Component
 
     public function refreshBooks()
     {
-        $this->books = Book::with('author')->get();
+        $this->books = app(BookService::class)->getAllBooksWithAuthors();
     }
 
     public function deleteBook($id)
     {
-        Book::findOrFail($id)->delete();
+        app(BookService::class)->deleteBookById($id);
         $this->refreshBooks();
     }
 
@@ -52,9 +52,7 @@ class BooksTable extends Component
             'newAuthorName' => 'required|string|max:255',
         ]);
 
-        $author = Author::findOrFail($this->editAuthorId);
-        $author->name = $this->newAuthorName;
-        $author->save();
+        app(AuthorService::class)->updateAuthorName($this->editAuthorId, $this->newAuthorName);
 
         $this->editAuthorId = null;
         $this->newAuthorName = '';

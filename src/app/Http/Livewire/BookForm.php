@@ -3,8 +3,8 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use App\Author;
-use App\Book;
+use App\Services\BookService;
+use Illuminate\Validation\ValidationException;
 
 class BookForm extends Component
 {
@@ -12,29 +12,20 @@ class BookForm extends Component
     public $author;
 
     protected $rules = [
-        'title' => 'required|string',
-        'author' => 'required|string',
+        'title' => 'required|string|max:255',
+        'author' => 'required|string|max:255',
     ];
 
     public function submit()
     {
         $this->validate($this->rules);
 
-        $author = Author::firstOrCreate(['name' => $this->author]);
-
-        $exists = Book::where('title', $this->title)
-            ->where('author_id', $author->id)
-            ->exists();
-
-        if ($exists) {
-            $this->addError('title', 'This author already has a book with this title.');
+        try {
+            app(BookService::class)->createBook($this->title, $this->author);
+        } catch (ValidationException $e) {
+            $this->setErrorBag($e->validator->getMessageBag());
             return;
         }
-
-        Book::create([
-            'title' => $this->title,
-            'author_id' => $author->id,
-        ]);
 
         $this->reset(['title', 'author']);
 
