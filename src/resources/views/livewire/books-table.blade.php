@@ -3,6 +3,7 @@
         <tr>
             <th>Title</th>
             <th>Author</th>
+            <th>Edit</th>
             <th>Delete</th>
         </tr>
     </thead>
@@ -12,10 +13,18 @@
                 <td>{{ $book->title }}</td>
                 <td>
                     @if ($editAuthorId === $book->author->id)
-                        <input type="text" wire:model.defer="newAuthorName" />
-                        <button wire:click="saveAuthor">💾</button>
+                        <input type="text" wire:model.defer="newAuthorName">
+                        @error('newAuthorName')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     @else
                         {{ $book->author->name }}
+                    @endif
+                </td>
+                <td>
+                    @if ($editAuthorId === $book->author->id)
+                        <button wire:click="saveAuthor">💾</button>
+                    @else
                         <button
                             wire:click="editAuthor({{ $book->author->id }}, '{{ addslashes($book->author->name) }}')">✏️</button>
                     @endif
@@ -28,7 +37,7 @@
             </tr>
         @empty
             <tr>
-                <td colspan="3">No books found.</td>
+                <td colspan="4">No books found.</td>
             </tr>
         @endforelse
     </tbody>
