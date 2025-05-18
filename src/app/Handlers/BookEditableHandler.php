@@ -10,6 +10,10 @@ class BookEditableHandler implements EditableFieldHandler
 {
     public function updateField(int $id, string $field, $value): void
     {
+        if ($field !== 'title') {
+            throw new \InvalidArgumentException("Field '{$field}' is not editable on books.");
+        }
+
         $book = Book::findOrFail($id);
 
         if ($field === 'title') {
@@ -19,7 +23,7 @@ class BookEditableHandler implements EditableFieldHandler
                 ]);
             }
         }
-        
+
         $book->$field = $value;
         $book->save();
     }

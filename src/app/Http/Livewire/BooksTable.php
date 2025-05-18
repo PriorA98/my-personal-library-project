@@ -20,8 +20,7 @@ class BooksTable extends Component
 
     public function refreshBooks()
     {
-        $bookService = app(BookService::class);
-        $this->books = $bookService->getAllBooksWithAuthors();
+        $this->books = app(BookService::class)->getAllBooksWithAuthors();
     }
 
 
