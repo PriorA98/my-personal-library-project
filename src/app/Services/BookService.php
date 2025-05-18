@@ -29,7 +29,7 @@ class BookService
 
         if ($exists) {
             throw ValidationException::withMessages([
-                'title' => 'This author already has a book with this title.',
+                'title' => 'The author "' . $author->name . '" already has a book with the title "' . $title . '".',
             ]);
         }
 

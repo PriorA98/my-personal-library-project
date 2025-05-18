@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Providers;
-use App\Services\BookService;
-use App\Services\AuthorService;
 
+use App\Handlers\BookEditableHandler;
+use App\Handlers\AuthorEditableHandler;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -15,13 +15,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(BookService::class, function ($app) {
-            return new BookService();
-        });
-
-        $this->app->singleton(AuthorService::class, function ($app) {
-            return new AuthorService();
-        });
+        $this->app->bind('editable.author', fn() => new AuthorEditableHandler());
+        $this->app->bind('editable.book', fn() => new BookEditableHandler());
     }
 
     /**

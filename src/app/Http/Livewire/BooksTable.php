@@ -4,20 +4,14 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Services\BookService;
-use App\Services\AuthorService;
 
 class BooksTable extends Component
 {
     public $books;
-    public $editAuthorId = null;
-    public $newAuthorName = '';
-
+    public $editingField = null;
+    public $editingValue = '';
 
     protected $listeners = ['bookAdded' => 'refreshBooks'];
-    protected $rules = [
-        'newAuthorName' => 'required|string',
-    ];
-
 
     public function mount()
     {
@@ -26,8 +20,11 @@ class BooksTable extends Component
 
     public function refreshBooks()
     {
-        $this->books = app(BookService::class)->getAllBooksWithAuthors();
+        $bookService = app(BookService::class);
+        $this->books = $bookService->getAllBooksWithAuthors();
     }
+
+
 
     public function deleteBook($id)
     {
@@ -40,24 +37,27 @@ class BooksTable extends Component
         return view('livewire.books-table');
     }
 
-    public function editAuthor($authorId, $currentName)
+    public function startEditing($model, $id, $field, $value)
     {
-        $this->editAuthorId = $authorId;
-        $this->newAuthorName = $currentName;
+        $this->editingField = compact('model', 'id', 'field');
+        $this->editingValue = $value;
     }
 
-    public function saveAuthor()
+    public function saveEdit()
     {
         $this->validate([
-            'newAuthorName' => 'required|string|max:255',
+            'editingValue' => 'required|string|max:255',
         ]);
 
-        app(AuthorService::class)->updateAuthorName($this->editAuthorId, $this->newAuthorName);
+        $handler = app('editable.' . $this->editingField['model']);
+        $handler->updateField(
+            $this->editingField['id'],
+            $this->editingField['field'],
+            $this->editingValue
+        );
 
-        $this->editAuthorId = null;
-        $this->newAuthorName = '';
-
+        $this->editingField = null;
+        $this->editingValue = '';
         $this->refreshBooks();
     }
-
 }
