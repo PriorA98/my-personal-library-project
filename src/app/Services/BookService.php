@@ -8,6 +8,7 @@ use Illuminate\Validation\ValidationException;
 
 class BookService
 {
+    // Method not used anymore, consider cleaning up
     public function getAllBooksWithAuthors()
     {
         return Book::with('author')->get();
@@ -38,4 +39,20 @@ class BookService
             'author_id' => $author->id,
         ]);
     }
+
+    public function getBooksWithAuthorsSorted(string $field = 'title', string $direction = 'asc')
+    {
+        $query = Book::with('author');
+
+        if ($field === 'author') {
+            $query = $query->join('authors', 'books.author_id', '=', 'authors.id')
+                ->orderBy('authors.name', $direction)
+                ->select('books.*');
+        } else {
+            $query = $query->orderBy($field, $direction);
+        }
+
+        return $query->get();
+    }
+
 }

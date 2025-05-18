@@ -10,17 +10,27 @@ class BooksTable extends Component
     public $books;
     public $editingField = null;
     public $editingValue = '';
+    public $sortField;
+    public $sortDirection;
 
-    protected $listeners = ['bookAdded' => 'refreshBooks'];
+    protected $listeners = [
+        'bookAdded' => 'refreshBooks',
+        'updateSort' => 'applySort',
+    ];
 
-    public function mount()
+    public function mount($sortField, $sortDirection)
     {
+        $this->sortField = $sortField;
+        $this->sortDirection = $sortDirection;
         $this->refreshBooks();
     }
 
     public function refreshBooks()
     {
-        $this->books = app(BookService::class)->getAllBooksWithAuthors();
+        $this->books = app(BookService::class)->getBooksWithAuthorsSorted(
+            $this->sortField,
+            $this->sortDirection
+        );
     }
 
 
@@ -57,6 +67,12 @@ class BooksTable extends Component
 
         $this->editingField = null;
         $this->editingValue = '';
+        $this->refreshBooks();
+    }
+    public function applySort($field, $direction)
+    {
+        $this->sortField = $field;
+        $this->sortDirection = $direction;
         $this->refreshBooks();
     }
 }

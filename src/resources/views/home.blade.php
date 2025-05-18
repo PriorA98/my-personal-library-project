@@ -10,7 +10,7 @@
 
     @livewire('book-form')
     <br>
-    @livewire('books-table')
+    @livewire('library-manager')
 
     @livewireScripts
 </body>
