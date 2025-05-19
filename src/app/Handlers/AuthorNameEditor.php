@@ -5,9 +5,9 @@ namespace App\Handlers;
 use App\Book;
 use App\Author;
 use App\Services\AuthorService;
-use App\Contracts\EditableFieldHandler;
+use App\Contracts\FieldEditor;
 
-class AuthorEditableHandler implements EditableFieldHandler
+class AuthorNameEditor implements FieldEditor
 {
     protected $authorService;
 

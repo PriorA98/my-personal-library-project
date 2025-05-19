@@ -3,10 +3,10 @@
 namespace App\Handlers;
 
 use App\Book;
-use App\Contracts\EditableFieldHandler;
+use App\Contracts\FieldEditor;
 use Illuminate\Validation\ValidationException;
 
-class BookEditableHandler implements EditableFieldHandler
+class BookTitleEditor implements FieldEditor
 {
     public function updateField(int $id, string $field, $value): void
     {

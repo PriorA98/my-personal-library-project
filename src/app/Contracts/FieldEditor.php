@@ -2,7 +2,7 @@
 
 namespace App\Contracts;
 
-interface EditableFieldHandler
+interface FieldEditor
 {
     public function updateField(int $id, string $field, $value): void;
 }

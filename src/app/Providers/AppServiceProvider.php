@@ -4,9 +4,10 @@ namespace App\Providers;
 
 use App\Services\BookService;
 use App\Services\AuthorService;
-use App\Handlers\BookEditableHandler;
-use App\Handlers\AuthorEditableHandler;
+use App\Handlers\BookTitleEditor;
+use App\Handlers\AuthorNameEditor;
 use Illuminate\Support\ServiceProvider;
+use App\Handlers\BookAuthorNameEditor;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,8 +18,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('editable.author', AuthorEditableHandler::class);
-        $this->app->bind('editable.book', BookEditableHandler::class);
+        $this->app->bind('editable.author-name', AuthorNameEditor::class);
+        $this->app->bind('editable.book-title', BookTitleEditor::class);
+        $this->app->bind('editable.book-author-name', BookAuthorNameEditor::class);
 
         $this->app->singleton(BookService::class, fn() => new BookService());
         $this->app->singleton(AuthorService::class, fn() => new AuthorService());
