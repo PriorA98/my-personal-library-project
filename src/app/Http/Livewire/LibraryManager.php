@@ -8,8 +8,9 @@ class LibraryManager extends Component
 {
     public $sortField = 'title';
     public $sortDirection = 'asc';
+    public $search = '';
 
-    protected $listeners = ['updateSort'];
+    protected $listeners = ['updateSort', 'updateSearch'];
 
     public function updateSort($field, $direction)
     {
@@ -20,5 +21,10 @@ class LibraryManager extends Component
     public function render()
     {
         return view('livewire.library-manager');
+    }
+
+    public function updateSearch($search)
+    {
+        $this->search = $search;
     }
 }

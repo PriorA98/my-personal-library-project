@@ -12,22 +12,25 @@ class BooksTable extends Component
     public $editingValue = '';
     public $sortField;
     public $sortDirection;
+    public $search;
 
     protected $listeners = [
         'bookAdded' => 'refreshBooks',
         'updateSort' => 'applySort',
     ];
 
-    public function mount($sortField, $sortDirection)
+    public function mount($sortField, $sortDirection, $search = '')
     {
         $this->sortField = $sortField;
         $this->sortDirection = $sortDirection;
+        $this->search = $search;
         $this->refreshBooks();
     }
 
     public function refreshBooks()
     {
-        $this->books = app(BookService::class)->getBooksWithAuthorsSorted(
+        $this->books = app(BookService::class)->getBooksWithAuthorsFilteredAndSorted(
+            $this->search,
             $this->sortField,
             $this->sortDirection
         );

@@ -1,5 +1,5 @@
 <div style="margin: 10px 0; display: flex; gap: 10px;">
-    <input type="text" placeholder="Search (Coming Soon)" disabled>
+    <input type="text" wire:model="search" placeholder="Search by title or author" />
 
     <button wire:click="sortBy('title')">
         Sort by Title ({{ $this->sortLabel('title') }})

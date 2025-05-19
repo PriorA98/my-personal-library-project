@@ -8,11 +8,6 @@ use Illuminate\Validation\ValidationException;
 
 class BookService
 {
-    // Method not used anymore, consider cleaning up
-    public function getAllBooksWithAuthors()
-    {
-        return Book::with('author')->get();
-    }
 
     public function deleteBookById($id)
     {
@@ -40,16 +35,25 @@ class BookService
         ]);
     }
 
-    public function getBooksWithAuthorsSorted(string $field = 'title', string $direction = 'asc')
+    public function getBooksWithAuthorsFilteredAndSorted($search = '', $sortField = 'title', $sortDirection = 'asc')
     {
         $query = Book::with('author');
 
-        if ($field === 'author') {
-            $query = $query->join('authors', 'books.author_id', '=', 'authors.id')
-                ->orderBy('authors.name', $direction)
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', '%' . $search . '%')
+                    ->orWhereHas('author', function ($sub) use ($search) {
+                        $sub->where('name', 'like', '%' . $search . '%');
+                    });
+            });
+        }
+
+        if ($sortField === 'author') {
+            $query->join('authors', 'books.author_id', '=', 'authors.id')
+                ->orderBy('authors.name', $sortDirection)
                 ->select('books.*');
         } else {
-            $query = $query->orderBy($field, $direction);
+            $query->orderBy($sortField, $sortDirection);
         }
 
         return $query->get();

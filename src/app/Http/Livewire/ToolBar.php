@@ -8,11 +8,13 @@ class ToolBar extends Component
 {
     public $sortField;
     public $sortDirection;
+    public $search = '';
 
-    public function mount($sortField, $sortDirection)
+    public function mount($sortField, $sortDirection, $search = '')
     {
         $this->sortField = $sortField;
         $this->sortDirection = $sortDirection;
+        $this->search = $search;
     }
 
     public function sortBy($field)
@@ -31,7 +33,9 @@ class ToolBar extends Component
     {
         $this->sortField = 'title';
         $this->sortDirection = 'asc';
+        $this->search = '';
         $this->emitUp('updateSort', $this->sortField, $this->sortDirection);
+        $this->emitUp('updateSearch', '');
     }
 
     public function render()
@@ -46,6 +50,11 @@ class ToolBar extends Component
         }
 
         return 'A-Z';
+    }
+
+    public function updatedSearch()
+    {
+        $this->emitUp('updateSearch', $this->search);
     }
 
 }
