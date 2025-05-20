@@ -4,10 +4,10 @@ namespace App\Providers;
 
 use App\Services\BookService;
 use App\Services\AuthorService;
-use App\Handlers\BookTitleEditor;
-use App\Handlers\AuthorNameEditor;
+use App\FieldEditors\BookTitleEditor;
+use App\FieldEditors\AuthorNameEditor;
 use Illuminate\Support\ServiceProvider;
-use App\Handlers\BookAuthorNameEditor;
+use App\FieldEditors\BookAuthorNameEditor;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,6 +21,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind('editable.author-name', AuthorNameEditor::class);
         $this->app->bind('editable.book-title', BookTitleEditor::class);
         $this->app->bind('editable.book-author-name', BookAuthorNameEditor::class);
+
+        $this->app->bind('export.titles', \App\ExportGenerators\TitlesOnlyExport::class);
+        $this->app->bind('export.authors', \App\ExportGenerators\AuthorsOnlyExport::class);
+        $this->app->bind('export.titles_authors', \App\ExportGenerators\TitlesAndAuthorsExport::class);
+
 
         $this->app->singleton(BookService::class, fn() => new BookService());
         $this->app->singleton(AuthorService::class, fn() => new AuthorService());

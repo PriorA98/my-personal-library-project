@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Handlers;
+namespace App\FieldEditors;
 
 use App\Book;
 use App\Contracts\FieldEditor;

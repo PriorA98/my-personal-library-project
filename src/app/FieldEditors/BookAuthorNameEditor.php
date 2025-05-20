@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Handlers;
+namespace App\FieldEditors;
 
 use App\Book;
 use App\Author;
 use App\Services\AuthorService;
 use App\Contracts\FieldEditor;
 
-class AuthorNameEditor implements FieldEditor
+class BookAuthorNameEditor implements FieldEditor
 {
     protected $authorService;
 
@@ -16,25 +16,25 @@ class AuthorNameEditor implements FieldEditor
         $this->authorService = $authorService;
     }
 
-    public function updateField(int $id, string $field, $value): void
+    public function updateField(int $bookId, string $field, $value): void
     {
-        if ($field !== 'name') {
+        if ($field !== 'author') {
             throw new \InvalidArgumentException("Field '{$field}' is not editable on authors.");
         }
 
-        $book = Book::where('author_id', $id)->firstOrFail();
+        $book = Book::findOrFail($bookId);
+        $oldAuthorId = $book->author_id;
 
         $existingAuthor = Author::where('name', $value)->first();
 
-        if ($existingAuthor && $existingAuthor->id !== $id) {
+        if ($existingAuthor) {
             $book->author_id = $existingAuthor->id;
-            $book->save();
-
-            $this->authorService->deleteIfOrphaned($id);
         } else {
-            $author = Author::findOrFail($id);
-            $author->name = $value;
-            $author->save();
+            $book->author_id = Author::create(['name' => $value])->id;
         }
+
+        $book->save();
+
+        $this->authorService->deleteIfOrphaned($oldAuthorId);
     }
 }
