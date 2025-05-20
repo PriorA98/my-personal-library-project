@@ -11,11 +11,13 @@ class ExportBar extends Component
     public $showOptions = false;
     public $selectedType = null;
     public $loading = false;
+    public $previewContent = null;
+    public $previewFormat = null;
 
     public function toggleOptions()
     {
         $this->showOptions = !$this->showOptions;
-        $this->reset('selectedType', 'loading');
+        $this->reset('selectedType', 'previewContent', 'previewFormat', 'loading');
     }
 
     public function selectType($type)
@@ -24,22 +26,41 @@ class ExportBar extends Component
             return;
 
         $this->selectedType = $type;
+        $this->reset('previewContent', 'previewFormat');
     }
 
-    public function export($format)
+    public function preview($format)
     {
-        if (!in_array($format, ['csv', 'xml']))
+        if (!in_array($format, ['csv', 'xml']) || !$this->selectedType)
             return;
 
         $this->loading = true;
 
-        $path = app(ExportService::class)->generateSingle($this->selectedType, $format);
+        $this->previewContent = app(ExportService::class)
+            ->generateContent($this->selectedType, $format);
+
+        $this->previewFormat = $format;
+        $this->loading = false;
+    }
+
+    public function confirmDownload()
+    {
+        if (!$this->previewFormat || !$this->selectedType)
+            return;
+
+        $path = app(ExportService::class)
+            ->exportDataToFile($this->selectedType, $this->previewFormat);
 
         $this->dispatchBrowserEvent('download-file', [
-            'url' => route('exports.download', ['path' => $path]),
+            'url' => route('exports.download', ['path' => $path])
         ]);
 
-        $this->loading = false;
+        $this->reset('previewContent', 'previewFormat', 'loading');
+    }
+
+    public function cancelPreview()
+    {
+        $this->reset('previewContent', 'previewFormat', 'loading');
     }
 
     public function render()
