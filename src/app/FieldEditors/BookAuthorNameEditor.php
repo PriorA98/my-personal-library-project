@@ -6,6 +6,7 @@ use App\Book;
 use App\Author;
 use App\Services\AuthorService;
 use App\Contracts\FieldEditor;
+use Illuminate\Validation\ValidationException;
 
 class BookAuthorNameEditor implements FieldEditor
 {
@@ -24,14 +25,18 @@ class BookAuthorNameEditor implements FieldEditor
 
         $book = Book::findOrFail($bookId);
         $oldAuthorId = $book->author_id;
+        $currentTitle = $book->title;
 
         $existingAuthor = Author::where('name', $value)->first();
 
-        if ($existingAuthor) {
-            $book->author_id = $existingAuthor->id;
-        } else {
-            $book->author_id = Author::create(['name' => $value])->id;
-        }
+        $newAuthor = $existingAuthor ?: Author::create(['name' => $value]);
+
+        if (Book::isDuplicateTitleForAuthor($newAuthor->id, $currentTitle, $book->id))
+            throw ValidationException::withMessages([
+                'author' => 'The author "' . $newAuthor->name . '" already has a book titled "' . $currentTitle . '".',
+            ]);
+
+        $book->author_id = $newAuthor->id;
 
         $book->save();
 

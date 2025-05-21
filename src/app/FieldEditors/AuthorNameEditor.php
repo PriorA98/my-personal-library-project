@@ -6,6 +6,7 @@ use App\Book;
 use App\Author;
 use App\Services\AuthorService;
 use App\Contracts\FieldEditor;
+use Illuminate\Validation\ValidationException;
 
 class AuthorNameEditor implements FieldEditor
 {
@@ -22,13 +23,27 @@ class AuthorNameEditor implements FieldEditor
             throw new \InvalidArgumentException("Field '{$field}' is not editable on authors.");
         }
 
-        $book = Book::where('author_id', $id)->firstOrFail();
+        $books = Book::where('author_id', $id)->get();
+
+        if ($books->isEmpty())
+            throw new \RuntimeException("No books found for the given author ID.");
+
 
         $existingAuthor = Author::where('name', $value)->first();
 
         if ($existingAuthor && $existingAuthor->id !== $id) {
-            $book->author_id = $existingAuthor->id;
-            $book->save();
+            foreach ($books as $book) {
+                if (Book::isDuplicateTitleForAuthor($existingAuthor->id, $book->title, $book->id)) {
+                    throw ValidationException::withMessages([
+                        'name' => 'The author "' . $existingAuthor->name . '" already has a book titled "' . $book->title . '".',
+                    ]);
+                }
+            }
+
+            foreach ($books as $book) {
+                $book->author_id = $existingAuthor->id;
+                $book->save();
+            }
 
             $this->authorService->deleteIfOrphaned($id);
         } else {
