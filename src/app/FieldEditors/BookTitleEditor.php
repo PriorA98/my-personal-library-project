@@ -16,12 +16,10 @@ class BookTitleEditor implements FieldEditor
 
         $book = Book::findOrFail($id);
 
-        if ($field === 'title') {
-            if (Book::isDuplicateTitleForAuthor($book->author_id, $value, $id)) {
-                throw ValidationException::withMessages([
-                    'title' => 'The author "' . $book->author->name . '" already has a book with the title "' . $value . '".',
-                ]);
-            }
+        if (Book::isDuplicateTitleForAuthor($book->author_id, $value, $id)) {
+            throw ValidationException::withMessages([
+                'title' => 'The author "' . $book->author->name . '" already has a book with the title "' . $value . '".',
+            ]);
         }
 
         $book->$field = $value;
