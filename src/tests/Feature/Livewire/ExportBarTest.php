@@ -67,7 +67,6 @@ class ExportBarTest extends TestCase
             ->assertSet('previewFormat', null);
     }
 
-    /** Helper to mock generateContent method */
     private function mockExportServiceReturning(string $data): void
     {
         App::bind(ExportService::class, function () use ($data) {
@@ -85,7 +84,6 @@ class ExportBarTest extends TestCase
         });
     }
 
-    /** Helper to mock exportDataToFile method */
     private function mockExportServiceExportPath(string $path): void
     {
         App::bind(ExportService::class, function () use ($path) {
