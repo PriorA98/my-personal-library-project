@@ -10,7 +10,4 @@
     </button>
 
     <button wire:click="resetSort">Reset</button>
-    
-    {{-- todo: implement --}}
-    <button disabled>Export (Coming Soon)</button>
 </div>
