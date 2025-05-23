@@ -53,6 +53,21 @@
                             @endif
                         </td>
 
+                        {{-- Edit author only for this book --}}
+                        <td class="icon-cell">
+                            @if ($this->isEditingBookAuthorName($book))
+                                <button wire:click="saveEdit" title="Save author (this book only)">
+                                    <span class="icon-btn">{!! svg_icon('Save') !!}</span>
+                                </button>
+                            @else
+                                <button
+                                    wire:click="startEditing('book', {{ $book->id }}, 'author', '{{ addslashes($book->author->name) }}')"
+                                    title="Change author only for this book">
+                                    <span class="icon-btn">{!! svg_icon('Edit') !!}</span>
+                                </button>
+                            @endif
+                        </td>
+
                         {{-- Edit all books by this author --}}
                         <td class="icon-cell">
                             @if ($this->isEditingAuthorName($book))
@@ -68,20 +83,7 @@
                             @endif
                         </td>
 
-                        {{-- Edit author only for this book --}}
-                        <td class="icon-cell">
-                            @if ($this->isEditingBookAuthorName($book))
-                                <button wire:click="saveEdit" title="Save author (this book only)">
-                                    <span class="icon-btn">{!! svg_icon('Save') !!}</span>
-                                </button>
-                            @else
-                                <button
-                                    wire:click="startEditing('book', {{ $book->id }}, 'author', '{{ addslashes($book->author->name) }}')"
-                                    title="Change author only for this book">
-                                    <span class="icon-btn">{!! svg_icon('Edit') !!}</span>
-                                </button>
-                            @endif
-                        </td>
+
 
                         {{-- Delete --}}
                         <td class="icon-cell">

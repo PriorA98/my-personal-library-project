@@ -2,38 +2,44 @@
 .table-scroll-container {
     flex-grow: 1;
     height: calc(100vh - 6rem);
-    overflow: auto;
+    overflow: hidden;
     padding-top: 1rem;
     margin-top: 1rem;
-    position: relative;
+    background-color: var(--color-light);
 }
 
 .table-wrapper {
     width: 100%;
-    overflow-x: auto;
+    height: 100%;
+    overflow: auto;
     -webkit-overflow-scrolling: touch;
 }
 
 /* ----------------- Base Table ----------------- */
 .library-table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
     font-size: 0.95rem;
     table-layout: fixed;
 }
 
-.library-table th {
+.library-table thead {
     position: sticky;
     top: 0;
+    z-index: 1;
+}
+
+.library-table th {
     background-color: #444;
     color: white;
     font-size: 1.05rem;
     font-weight: bold;
     padding: 1rem;
     border: 1px solid var(--color-border);
-    z-index: 10;
     white-space: nowrap;
     text-align: center;
+    border-bottom: 2px solid var(--color-border);
 }
 
 .library-table td {
@@ -53,8 +59,6 @@
     padding: 0.5rem;
     white-space: nowrap;
 }
-
-
 
 /* ----------------- Flexible Content Columns ----------------- */
 .library-table .title-cell,
