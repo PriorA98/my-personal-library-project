@@ -14,5 +14,6 @@
 @import './components/_forms.css';
 @import './components/_export-bar.css';
 @import './components/_icon-buttons.css';
+@import './components/_tool-bar.css';
 
 @import './modules/_table.css';
