@@ -1,0 +1,29 @@
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    display: block;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    color: var(--color-muted);
+    font-weight: 500;
+}
+
+form input[type="text"],
+input[type="text"] {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border-radius: var(--radius-sm);
+    background-color: var(--color-light);
+    border: 1px solid var(--color-border);
+    transition: border 0.3s;
+    margin-bottom: 1rem;
+}
+
+input[type="text"]:focus-visible {
+    border-color: var(--color-primary);
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}

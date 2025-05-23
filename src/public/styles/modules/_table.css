@@ -1,0 +1,147 @@
+/* ----------------- Table Container ----------------- */
+.table-scroll-container {
+    flex-grow: 1;
+    height: calc(100vh - 6rem);
+    overflow: auto;
+    padding-top: 1rem;
+    margin-top: 1rem;
+    position: relative;
+}
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ----------------- Base Table ----------------- */
+.library-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    table-layout: fixed;
+}
+
+.library-table th {
+    position: sticky;
+    top: 0;
+    background-color: #444;
+    color: white;
+    font-size: 1.05rem;
+    font-weight: bold;
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    z-index: 10;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.library-table td {
+    background-color: var(--color-light);
+    color: var(--color-primary);
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    vertical-align: middle;
+}
+
+/* ----------------- Fixed Column Widths ----------------- */
+.library-table .icon-cell {
+    width: 48px;
+    min-width: 48px;
+    max-width: 48px;
+    text-align: center;
+    padding: 0.5rem;
+    white-space: nowrap;
+}
+
+
+
+/* ----------------- Flexible Content Columns ----------------- */
+.library-table .title-cell,
+.library-table .author-cell {
+    max-width: none;
+    min-width: 160px;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Optional for cell wrapping */
+.text-content {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ----------------- Editable Input ----------------- */
+.library-table input[type="text"] {
+    width: 100%;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    border: 1px solid #bbb;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ----------------- Action Buttons ----------------- */
+.library-table button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+    transition: transform 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    margin: 0 auto;
+}
+
+.library-table button:hover {
+    transform: scale(1.15);
+}
+
+.library-table .icon-btn {
+    width: 24px;
+    height: 24px;
+}
+
+.library-table .icon-btn svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* ----------------- Responsive Adjustments ----------------- */
+@media (max-width: 920px) {
+    .library-table th {
+        font-size: 0.9rem;
+        padding: 0.75rem 0.5rem;
+    }
+
+    .library-table .title-cell,
+    .library-table .author-cell {
+        white-space: normal;
+        word-break: break-word;
+    }
+
+    .library-table .icon-cell {
+        width: 40px;
+        padding: 0.25rem;
+    }
+
+    .library-table button {
+        width: 28px;
+        height: 28px;
+    }
+
+    .library-table .icon-btn {
+        width: 20px;
+        height: 20px;
+    }
+}

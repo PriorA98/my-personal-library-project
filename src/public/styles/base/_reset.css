@@ -1,0 +1,17 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-base);
+}
+
+html,
+body {
+    min-height: 100vh;
+    overflow-y: auto;
+}
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-primary);
+}

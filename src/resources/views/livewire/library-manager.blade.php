@@ -1,5 +1,10 @@
 <div>
-    @livewire('tool-bar', ['sortField' => $sortField, 'sortDirection' => $sortDirection])
+    @livewire('tool-bar', [
+        'sortField' => $sortField,
+        'sortDirection' => $sortDirection,
+        'search' => $search,
+    ])
+
     @livewire(
         'books-table',
         [

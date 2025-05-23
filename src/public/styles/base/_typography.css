@@ -1,0 +1,13 @@
+body {
+    font-family: var(--font-base);
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--color-primary);
+}
+
+.section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+    color: var(--color-muted);
+}
