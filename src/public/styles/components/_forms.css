@@ -19,7 +19,6 @@ input[type="text"] {
     background-color: var(--color-light);
     border: 1px solid var(--color-border);
     transition: border 0.3s;
-    margin-bottom: 1rem;
 }
 
 input[type="text"]:focus-visible {
