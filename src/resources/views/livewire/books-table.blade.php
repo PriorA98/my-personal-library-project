@@ -1,10 +1,6 @@
 <div class="box table-scroll-container">
     @if ($errors->any())
-        <div class="alert alert-danger" style="margin-bottom: 1em;">
-            @foreach ($errors->all() as $error)
-                {{ $error }}
-            @endforeach
-        </div>
+        @livewire('alert', ['message' => $errors->first(), 'type' => 'danger'], key('books-table-alert'))
     @endif
 
     <div class="table-wrapper">

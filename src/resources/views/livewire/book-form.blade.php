@@ -1,10 +1,6 @@
 <form wire:submit.prevent="submit">
     @if ($errors->any())
-        <div class="alert alert-danger" style="margin-bottom: 1em;">
-            @foreach ($errors->all() as $error)
-                <div>{{ $error }}</div>
-            @endforeach
-        </div>
+        @livewire('alert', ['message' => $errors->first(), 'type' => 'danger'], key('book-form-alert'))
     @endif
 
     <label for="title">Enter the book's title:</label>

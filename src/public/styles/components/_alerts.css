@@ -1,5 +1,51 @@
 .alert {
-    margin-top: 0.5rem;
-    color: red;
+    margin-bottom: 1rem;
     font-size: 0.85rem;
+    border-radius: var(--radius-sm);
+    padding: 0.7rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.alert-danger {
+    background-color: #fee2e2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+}
+
+.alert-content {
+    flex: 1;
+}
+
+.alert-close {
+    background: none;
+    border: none;
+    padding: 0.25rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.1s;
+    width: 24px;
+    height: 24px;
+}
+
+.alert-close:hover {
+    transform: scale(1.15);
+}
+
+.alert-close .icon-btn {
+    width: 16px;
+    height: 16px;
+    color: #dc2626;
+}
+
+@media (max-width: 920px) {
+    .alerts-container {
+        left: 1rem;
+        right: 1rem;
+        max-width: none;
+    }
 }
