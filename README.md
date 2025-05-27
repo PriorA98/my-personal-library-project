@@ -45,7 +45,7 @@ Access the app at: [http://localhost](http://localhost)
 
 ```bash
 docker-compose up -d
-docker-compose exec laravel composer install # Optional
+docker-compose exec laravel composer install
 ```
 
 ---
@@ -110,7 +110,7 @@ erDiagram
 
 1. Add column/table via migration
     ```cmd
-        // laravel command to create migration in docker
+        docker-compose exec laravel php artisan make:migration migration_name
     ```
 2. Create a new `FieldEditor` class:
 
