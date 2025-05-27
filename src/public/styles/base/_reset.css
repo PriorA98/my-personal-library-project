@@ -1,0 +1,18 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    padding-right: 1px;
+    padding-left: 1px;
+}
+
+html,
+body {
+    min-height: 100vh;
+    overflow-y: auto;
+}
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-primary);
+}

@@ -1,0 +1,17 @@
+:root {
+    --color-bg: #f9f9fc;
+    --color-primary: #333;
+    --color-light: #ffffff;
+    --color-muted: #666;
+    --color-border: #ccc;
+    --color-shadow: rgba(0, 0, 0, 0.05);
+    --color-danger: #dc2626;
+    --color-danger-bg: #fee2e2;
+    --color-danger-border: #fecaca;
+
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --shadow-md: 0 2px 5px var(--color-shadow);
+
+    --font-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}

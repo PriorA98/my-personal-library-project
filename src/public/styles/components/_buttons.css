@@ -1,0 +1,39 @@
+button,
+.btn {
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-black {
+    background-color: var(--color-primary);
+    color: var(--color-light);
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 0.7rem 1rem;
+    width: 100%;
+    font-weight: bold;
+}
+
+.btn-black:hover {
+    background-color: #111;
+}
+
+.btn-toggle {
+    background-color: var(--color-light);
+    border: 1px solid #999;
+    border-radius: 999px;
+    padding: 0.6rem 1.2rem;
+    flex: 1;
+    min-width: 0;
+}
+
+.btn-toggle:hover {
+    background-color: #eee;
+}
+
+.btn-toggle.active {
+    background-color: var(--color-primary);
+    color: var(--color-light);
+    border-color: var(--color-primary);
+}
