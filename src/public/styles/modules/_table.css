@@ -1,7 +1,7 @@
 /* ----------------- Table Container ----------------- */
 .table-scroll-container {
     flex-grow: 1;
-    height: calc(100vh - 6rem);
+    height: calc(91vh - 8rem);
     overflow: hidden;
     padding-top: 1rem;
     margin-top: 1rem;

@@ -41,6 +41,20 @@ Access the app at: [http://localhost](http://localhost)
 
 ---
 
+### Port Configuration
+
+The application uses the following port mappings:
+- Web server: `80:80` (host:container)
+- MySQL: `3308:3306` (host:container)
+
+If you encounter port conflicts:
+1. For port 80: Edit the `docker-compose.yml` file and change the host port (first number) to an available port (e.g., `8080:80`)
+2. For MySQL port 3308: Change the host port to another available port (e.g., `3309:3306`)
+
+After changing ports, remember to update your access URL accordingly (e.g., `http://localhost:8080` if you changed port 80 to 8080).
+
+---
+
 ### General Startups
 
 ```bash
