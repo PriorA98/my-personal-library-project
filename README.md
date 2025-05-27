@@ -1,6 +1,6 @@
 # Web Developer Assignment – Book Library
 
-This is a complete Laravel 6 + Livewire 1.x web application for managing a personal book library.
+This is a Laravel 6 + Livewire 1.x web application for managing a personal book library.
 
 It includes:
 
@@ -41,7 +41,7 @@ Access the app at: [http://localhost](http://localhost)
 
 ---
 
-### No Setup Startups
+### General Startups
 
 ```bash
 docker-compose up -d
@@ -125,10 +125,11 @@ erDiagram
        break;
    ```
 6. Update `BooksTable.blade.php` and `isEditing*` methods if required
+7. Add and update related tests.
 
 ---
 
-## Export Feature Design Decision
+## About Export Feature Design Decision
 
 Export functionality (CSV/XML) is **synchronous by design** to match the scope of this application.
 
@@ -152,21 +153,21 @@ docker-compose exec laravel vendor/bin/phpunit
 
 ### Coverage Matrix
 
-| Area                           | Type    | Status    | Description                                           |
-| ------------------------------ | ------- | --------- | ----------------------------------------------------- |
-| **Models**                     | Unit    | ✅ Covered | Book model logic tested (`isDuplicateTitleForAuthor`) |
-| **Services**                   | Unit    | ✅ Full    | Book & Author CRUD, filters, sort                     |
-| **Field Editors**              | Unit    | ✅ Full    | Title edits, author merging, per-book changes         |
-| **Export Generators**          | Unit    | ✅ Full    | CSV & XML export generators                           |
-| **Export Service**             | Unit    | ✅ Full    | Dynamic content + file path creation                  |
-| **Livewire: BookForm**         | Feature | ✅ Full    | Form validation, creation, event emit                 |
-| **Livewire: BooksTable**       | Feature | ✅ Full    | Edit, delete, validation, sorting                     |
-| **Livewire: ExportBar**        | Feature | ✅ Full    | Toggle options, preview, download events              |
-| **Livewire: ToolBar**          | Feature | ✅ Full    | Search, sort toggling, reset                          |
-| **Livewire: LibraryManager**   | Feature | ✅ Covered | Sort + search event relay                             |
-| **Controller: ExportDownload** | Feature | ✅ Full    | File return, MIME headers, 404, auto-delete           |
-| **Contracts & Interfaces**     | —       | ✅ N/A     | Stateless definitions                                 |
-| **Providers/Bindings**         | —       | ✅ N/A     | Tested indirectly via feature + unit coverage         |
+| Area                           | Type    | Description                                           |
+| ------------------------------ | ------- | ----------------------------------------------------- |
+| **Models**                     | Unit    | Book model logic tested (`isDuplicateTitleForAuthor`) |
+| **Services**                   | Unit    | Book & Author CRUD, filters, sort                     |
+| **Field Editors**              | Unit    | Title edits, author merging, per-book changes         |
+| **Export Generators**          | Unit    | CSV & XML export generators                           |
+| **Export Service**             | Unit    | Dynamic content + file path creation                  |
+| **Livewire: BookForm**         | Feature | Form validation, creation, event emit                 |
+| **Livewire: BooksTable**       | Feature | Edit, delete, validation, sorting                     |
+| **Livewire: ExportBar**        | Feature | Toggle options, preview, download events              |
+| **Livewire: ToolBar**          | Feature | Search, sort toggling, reset                          |
+| **Livewire: LibraryManager**   | Feature | Sort + search event relay                             |
+| **Controller: ExportDownload** | Feature | File return, MIME headers, 404, auto-delete           |
+| **Contracts & Interfaces**     | —       | Stateless definitions                                 |
+| **Providers/Bindings**         | —       | Tested indirectly via feature + unit coverage         |
 
 ---
 
@@ -176,11 +177,9 @@ docker-compose exec laravel vendor/bin/phpunit
 * Pagination support on the table
 * Import data from CSV/XML support
 * Async export via Laravel Queues
-* Refactors alerts with personalized dialogues
+* Refactors confirm dialogs with personalized dialogues
+* Show and handle export errors 
+* Enchant user feedback for add, edit and delete operations
+    * Es: Success Message, visual feedback on edit and delete
 
 ---
-
-
-- still to do:
-    - alerts UI
-    - user feedback on edit/delete
