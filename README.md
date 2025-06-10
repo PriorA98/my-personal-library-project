@@ -1,4 +1,4 @@
-# Web Developer Assignment – Book Library
+# My Personal Book Library
 
 This is a Laravel 6 + Livewire 1.x web application for managing a personal book library.
 
